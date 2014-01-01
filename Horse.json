@@ -1,0 +1,47 @@
+{
+	"frames":
+	{
+		"Horse 1.png":
+		{
+			"frame": {"x":0, "y": 0, "w": 106, "h": 74},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":106,"h":240},
+			"sourceSize":{"w":106,"h":74}
+		},
+		"Horse 2.png":
+		{
+			"frame": {"x":106, "y": 0, "w": 106, "h": 74},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":106,"h":240},
+			"sourceSize":{"w":106,"h":74}
+		},
+		"Horse 3.png":
+		{
+			"frame": {"x":212, "y": 0, "w": 106, "h": 74},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":106,"h":240},
+			"sourceSize":{"w":106,"h":74}
+		},
+		"Horse 4.png":
+		{
+			"frame": {"x":318, "y": 0, "w": 106, "h": 74},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":106,"h":240},
+			"sourceSize":{"w":106,"h":74}
+		}
+	},
+	"meta":
+	{
+	        "app": "http://www.texturepacker.com",
+	        "version": "1.0",
+	        "image": "images/HorseRun.png",
+	        "format": "RGBA8888",
+	        "size": {"w":425,"h":74},
+	        "scale": "1",
+	        "smartupdate": "$TexturePacker:SmartUpdate:17e4a2d92ff3e27832c3f4938cec7c85$"
+	}
+}

@@ -1,0 +1,71 @@
+{
+	"frames":
+	{
+		"life 100":
+		{
+			"frame": {"x":0, "y": 0, "w": 86, "h": 12},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":86,"h":84},
+			"sourceSize": {"w":86,"h":12}
+		},
+		"life 80":
+		{
+			"frame": {"x":0, "y": 12, "w": 86, "h": 12},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":86,"h":84},
+			"sourceSize": {"w":86,"h":12}
+		},
+		"life 60":
+		{
+			"frame": {"x":0, "y": 24, "w": 86, "h": 12},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":86,"h":84},
+			"sourceSize": {"w":86,"h":12}
+		},
+		"life 40":
+		{
+			"frame": {"x":0, "y": 36, "w": 86, "h": 12},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":86,"h":84},
+			"sourceSize": {"w":86,"h":12}
+		},
+		"life 20":
+		{
+			"frame": {"x":0, "y": 48, "w": 86, "h": 12},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":86,"h":84},
+			"sourceSize": {"w":86,"h":12}
+		},
+		"life 5":
+		{
+			"frame": {"x":0, "y": 60, "w": 86, "h": 12},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":86,"h":84},
+			"sourceSize": {"w":86,"h":12}
+		},
+		"life 0":
+		{
+			"frame": {"x":0, "y": 72, "w": 86, "h": 12},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":86,"h":84},
+			"sourceSize": {"w":86,"h":12}
+		}
+	},
+	"meta":
+	{
+	        "app": "http://www.texturepacker.com",
+	        "version": "1.0",
+	        "image": "images/lifeBar.png",
+	        "format": "RGBA8888",
+	        "size": {"w":86,"h":84},
+	        "scale": "1",
+	        "smartupdate": "$TexturePacker:SmartUpdate:17e4a2d92ff3e27832c3f4938cec7c85$"
+	}
+}

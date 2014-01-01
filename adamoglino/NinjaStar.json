@@ -1,0 +1,55 @@
+{
+	"frames":
+	{
+		"star 1.png":
+		{
+			"frame": {"x":0, "y": 0, "w": 50, "h": 50},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":250,"h":50},
+			"sourceSize": {"w":50,"h":50}
+		},
+		"star 2.png":
+		{
+			"frame": {"x":50, "y": 0, "w": 50, "h": 50},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":250,"h":50},
+			"sourceSize": {"w":50,"h":50}
+		},
+		"star 3.png":
+		{
+			"frame": {"x":100, "y": 0, "w": 50, "h": 50},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":250,"h":50},
+			"sourceSize": {"w":50,"h":50}
+		},
+		"star 4.png":
+		{
+			"frame": {"x":150, "y": 0, "w": 50, "h": 50},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":250,"h":50},
+			"sourceSize": {"w":50,"h":50}
+		},
+		"star 5.png":
+		{
+			"frame": {"x":200, "y": 0, "w": 50, "h": 50},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":250,"h":50},
+			"sourceSize": {"w":50,"h":50}
+		}
+	},
+	"meta":
+	{
+	        "app": "http://www.texturepacker.com",
+	        "version": "1.0",
+	        "image": "images/ninjaStarSheet.png",
+	        "format": "RGBA8888",
+	        "size": {"w":250,"h":50},
+	        "scale": "1",
+	        "smartupdate": "$TexturePacker:SmartUpdate:17e4a2d92ff3e27832c3f4938cec7c85$"
+	}
+}

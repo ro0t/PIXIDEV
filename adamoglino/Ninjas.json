@@ -1,0 +1,47 @@
+{
+	"frames":
+	{
+		"redNinjaLeft":
+		{
+			"frame": {"x":0, "y": 0, "w": 158, "h": 208},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":316,"h":416},
+			"sourceSize": {"w":158,"h":208}
+		},
+		"redNinjaRight":
+		{
+			"frame": {"x":158, "y": 0, "w": 158, "h": 208},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":316,"h":416},
+			"sourceSize": {"w":158,"h":208}
+		},
+		"blueNinjaLeft":
+		{
+			"frame": {"x":0, "y": 208, "w": 158, "h": 208},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":316,"h":416},
+			"sourceSize": {"w":158,"h":208}
+		},
+		"blueNinjaRight":
+		{
+			"frame": {"x":158, "y": 208, "w": 158, "h": 208},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":316,"h":416},
+			"sourceSize": {"w":158,"h":208}
+		}
+	},
+	"meta":
+	{
+	        "app": "http://www.texturepacker.com",
+	        "version": "1.0",
+	        "image": "images/ninjaSheet.png",
+	        "format": "RGBA8888",
+	        "size": {"w":316,"h":416},
+	        "scale": "1",
+	        "smartupdate": "$TexturePacker:SmartUpdate:17e4a2d92ff3e27832c3f4938cec7c85$"
+	}
+}
