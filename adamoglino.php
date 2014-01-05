@@ -8,10 +8,15 @@
 		<script type="text/javascript" src="js/pixi.dev.js"></script>
 		<script type="text/javascript" src="js/vSprite.js"></script>
 		<script type="text/javascript" src="adamoglino/js/background.js"></script>
+		<script type="text/javascript" src="adamoglino/js/level.js"></script>
 		<script type="text/javascript" src="adamoglino/js/star.js"></script>
 		<script type="text/javascript" src="adamoglino/js/life.js"></script>
 		<script type="text/javascript" src="adamoglino/js/ninja.js"></script>
 		<script type="text/javascript">
+
+			var musicIsOn = false;
+			var debug = false;
+			var gameCounter = 0;
 
 			loader = new PIXI.AssetLoader(['adamoglino/NinjaStar.json', 'adamoglino/Ninjas.json', 'adamoglino/Lifebar.json']);
 
@@ -19,19 +24,21 @@
 
 			loader.onComplete = function(elm) {
 
-				myAudio = new Audio('adamoglino/song.ogg'); 
-				if (typeof myAudio.loop == 'boolean')
-				{
-				    myAudio.loop = true;
+				if(musicIsOn) {
+					myAudio = new Audio('adamoglino/song.ogg'); 
+					if (typeof myAudio.loop == 'boolean')
+					{
+					    myAudio.loop = true;
+					}
+					else
+					{
+					    myAudio.addEventListener('ended', function() {
+					        this.currentTime = 0;
+					        this.play();
+					    }, false);
+					}
+					myAudio.play();
 				}
-				else
-				{
-				    myAudio.addEventListener('ended', function() {
-				        this.currentTime = 0;
-				        this.play();
-				    }, false);
-				}
-				myAudio.play();
 
 				var width = 800;
 				var height = 600;
@@ -48,6 +55,7 @@
 		        renderer.view.style.width = window.innerWidth + "px";
 		        renderer.view.style.height = window.innerHeight + "px";
 		        renderer.view.style.display = "block";
+		        renderer.drawDebugObjects = debug;
 
 		        document.body.appendChild(renderer.view);
 
@@ -65,6 +73,20 @@
 					starTextures.push(texture);
 				}
 
+				level = new Level(renderer);
+				level.draw();
+
+				walls = level.getWalls();
+				platforms = level.getPlatforms();
+
+				input();
+				requestAnimFrame(update);
+
+			};
+
+			loader.load();
+
+			function input() {
 				document.addEventListener('keydown', function() {
 					if(event.keyCode == 37) { // Left
 						ninjaTwo.moveLeft();
@@ -112,19 +134,19 @@
 						ninjaTwo.stopMoveRight();
 					}
 				});
+			}
 
-				requestAnimFrame(update);
-
-			};
-
-			loader.load();
-
-			function collides(object, item) {
+			function collides(object, item, onewX, onewY, inewX, inewY) {
 				
-				var xdist = object.position.x - item.position.x;
+				var objectX = (onewX == undefined) ? object.position.x : onewX;
+				var objectY = (onewY == undefined) ? object.position.y : onewY;
+				var itemX = (inewX == undefined) ? item.position.x : inewX;
+				var itemY = (inewY == undefined) ? item.position.y : inewY;
+
+				var xdist = objectX - itemX;
 
 				if(xdist > -object.width/2 && xdist < object.width/2) {
-					var ydist = object.position.y - item.position.y;
+					var ydist = objectY - itemY;
 
 					if(ydist > -object.height/2 && ydist < object.height/2) {
 						
@@ -136,6 +158,8 @@
 			}
 
 			function update() {
+				
+				++gameCounter;
 
 				activeStars1 = 0;
 				activeStars2 = 0;
@@ -159,8 +183,11 @@
 					}
 				}
 
-				ninjaOne.update();
-				ninjaTwo.update();
+				ninjaOne.update(gameCounter);
+				ninjaTwo.update(gameCounter);
+
+				if(gameCounter > 1000000)
+					gameCounter = 0;
 
 				renderer.render(stage);
 				requestAnimFrame(update);

@@ -1,29 +1,38 @@
 var LEFT = 'left';
 var RIGHT = 'right';
 var MAX_STARS_PER_NINJA = 3;
+var JUMP_HEIGHT = 300;
+var VELOCITY_Y = 15;
+var VELOCITY_X = 6;
 
 /**
 * @class Ninja
 */
 function Ninja(stage, renderer, id, x, y) {
 
+	playerObject = new PIXI.Graphics();
+	playerObject.lineStyle(1, 0xff9600, 1);
+
+	this.debugObject = null;
+
 	this.id = id;
 	this.renderer = renderer;
 
 	this.isJumping = false;
 	this.canJump = true;
+	this.isFalling = false;
+	this.jumpPosition = y;
+
+	this.currentPlatform = null;
 
 	this.isMovingLeft = false;
 	this.isMovingRight = false;
 
-	this.newY = 0;
-	this.newX = 0;
-
 	this.originalY = y;
 	this.originalX = x;
 
-	this.velocityY = 15;
-	this.velocityX = 6;
+	this.velocityY = VELOCITY_Y;
+	this.velocityX = VELOCITY_X;
 
 	this.ninja = new vSprite(
 		     PIXI.TextureCache[(id == 1) ? 'blueNinjaRight' : 'redNinjaLeft'],
@@ -37,6 +46,7 @@ function Ninja(stage, renderer, id, x, y) {
 	this.stage = stage;
 
 	stage.addChild(this.ninja);
+	stage.addChild(playerObject);
 
 	this.life();
 
@@ -50,8 +60,14 @@ Ninja.prototype.life = function() {
 }
 
 Ninja.prototype.jump = function() {
-	if(this.canJump)
+
+	if(this.canJump) {
+		this.jumpPosition = this.ninja.position.y - JUMP_HEIGHT;	
 		this.isJumping = true;
+		this.canJump = false;
+		this.isGrounded = false;
+	}
+
 };
 
 Ninja.prototype.moveLeft = function() {
@@ -105,43 +121,140 @@ Ninja.prototype.loseLife = function() {
 	this.lifebar.loseLife();
 }
 
+Ninja.prototype.predictX = function() {
+
+	var x = this.ninja.position.x;
+
+	if(this.isMovingLeft) x -= this.velocityX;
+	if(this.isMovingRight) x += this.velocityX;
+
+	return x;
+
+};
+
+Ninja.prototype.predictY = function() {
+
+	var y = this.ninja.position.y;
+
+	if(this.isJumping) y -= this.velocityY;
+	if(this.isFalling) y += this.velocityY;
+
+	return y;
+
+};
+
 Ninja.prototype.update = function() {
 
 	this.lifebar.update();
 
+	var nextX = this.predictX();
+	var nextY = this.predictY();
+
 	if(this.isJumping) {
-		this.newY = this.originalY - 300;
+		this.isFalling = false;
 
-		this.ninja.position.y -= this.velocityY;
+		var newY = this.jumpPosition;
 
-		if(this.ninja.position.y <= this.newY) {
-			this.isJumping = false;
-			this.canJump = false;
+		for(platform in platforms) {
+			var p = platforms[platform];
+
+			if((nextX + this.ninja.width) >= p.position.x && nextX <= p.position.x + p.width) {
+				if(nextY >= p.position.y && nextY <= p.position.y + p.height) {
+					this.isJumping = false;
+					this.isFalling = true;
+					return;
+				}
+			}
+
 		}
 
-	} else {
+		if(this.ninja.position.y <= newY) {
+			this.isJumping = false;
+			this.isFalling = true;
+		} else {
+			this.ninja.position.y = nextY;
+		}
 
-		this.newY = this.originalY;
+	}
 
-		this.ninja.position.y += this.velocityY;
+	if(this.isFalling) {
 
-		if(this.ninja.position.y >= this.originalY) {
+		if(this.ninja.position.y != this.originalY && this.isGrounded) {
+			nextY = this.currentPlatform.position.y - this.ninja.height;
+
+			if((nextX + this.ninja.width) > this.currentPlatform.position.x && nextX < this.currentPlatform.position.x + this.currentPlatform.width) {
+				this.isGrounded = true;
+			} else {
+				this.isGrounded = false;
+			}
+
+		} else {
+			for(platform in platforms) {
+				var p = platforms[platform];
+
+				if(nextY >= p.position.y && nextY <= p.position.y + p.height) {
+					if((nextX + this.ninja.width) >= p.position.x && nextX <= p.position.x + p.width) {
+						this.canJump = true;
+						this.isGrounded = true;
+						nextY = p.position.y - this.ninja.height;
+						this.currentPlatform = p;
+					}
+				}
+			}
+		}
+
+		if(nextY >= this.originalY) {
 			this.canJump = true;
+			this.isFalling = false;
 			this.ninja.position.y = this.originalY;
+		} else {
+			this.ninja.position.y = nextY;
 		}
 
 	}
 
 	if(this.isMovingLeft) {
-		if(this.ninja.position.x + 10 > 0) {
-			this.ninja.position.x -= this.velocityX;
+
+		if(this.ninja.position.x > 0) {
+
+			for(wall in walls) {
+				if(collides(walls[wall], this.ninja, undefined, undefined, nextX - this.ninja.width/2)) {
+					return;
+				}
+			}
+
+			this.ninja.position.x = nextX;
 		}
 	}
 
 	if(this.isMovingRight) {
-		if((this.ninja.position.x - 10 + this.ninja.width) <= this.renderer.width)
-			this.ninja.position.x += this.velocityX;
+
+
+		if((this.ninja.position.x + this.ninja.width) <= this.renderer.width) {
+
+			for(wall in walls) {
+				if(collides(walls[wall], this.ninja, undefined, undefined, nextX + this.ninja.width/2)) {
+					return;
+				}
+			}
+
+			this.ninja.position.x = nextX;
+		}
+			
 	}
+
+	if(this.renderer.drawDebugObjects) this.drawDebugObjects();
+
+};
+
+Ninja.prototype.drawDebugObjects = function() {
+
+	/*if(this.debugObject != null) {
+
+	} else {
+		this.debugObject = 1;
+		playerObject.drawRect(this.ninja.position.x, this.ninja.position.y, this.ninja.width, this.ninja.height);
+	}*/
 
 };
 
